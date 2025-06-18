@@ -147,6 +147,22 @@ def extract_table_tb_result(html_content: Dict[str, Any]) -> str:
     result = ''
     for s in strs:
         if len(s) >= 5:
-            result += f"{s[2]} - {s[4]}\n"
+            word = 'баллов'
+            i = s[4]
+            if not s[4].isdigit():
+                word = ''
+            elif i == '100':
+                word = 'баллов'
+            elif 10 <= int(i) <= 20:
+                word = 'баллов'
+            elif i[-1] == '1':
+                word = 'баллов'
+            elif 2<= int(i[-1]) <= 4:
+                word = 'балла'
+            elif 5 <= int(i[-1]) <= 9:
+                word = 'баллов'
 
+
+
+            result += f"*{s[2]}* - {s[4]} {word}\n"
     return result

@@ -27,7 +27,7 @@ class ResultService:
             logger.error(f"Error getting result for user {user_id}: {str(e)}")
             return "Произошла ошибка при получении результатов. Попробуйте позже."
 
-    async def check_result_changes(self, user_id: int) -> Optional[str]:
+    async def check_result_changes(self, user_id: int) -> Optional[tuple]:
         """Проверка изменений в результатах пользователя"""
         user = await user_repository.get_user_by_id(user_id)
         if not user:
@@ -45,8 +45,9 @@ class ResultService:
             current_result = extract_table_tb_result(content)
 
             if current_result != user.last_result:
+                prev = user.last_result
                 await user_repository.update_user_result(user_id, current_result)
-                return current_result
+                return current_result, prev
 
             return None
         except Exception as e:

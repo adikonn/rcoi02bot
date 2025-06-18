@@ -2,6 +2,7 @@ from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command
 from services.result_service import result_service
+from utils.phrases import get_phrase
 import logging
 
 logger = logging.getLogger(__name__)
@@ -29,7 +30,7 @@ async def get_result_command(message: Message) -> None:
                 "команду /reregister для повторной регистрации."
             )
         else:
-            await message.answer(f"📊 **Ваши результаты:**\n\n{result}", parse_mode="Markdown")
+            await message.answer(f"📊 **Ваши результаты:**\n\n{result}\n\n***«{get_phrase()}»***", parse_mode="Markdown")
 
     except Exception as e:
         logger.error(f"Error in get_result_command: {str(e)}")

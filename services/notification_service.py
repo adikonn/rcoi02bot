@@ -4,7 +4,7 @@ from services.result_service import result_service
 import asyncio
 import logging
 from config.settings import settings
-
+from utils.phrases import get_phrase
 logger = logging.getLogger(__name__)
 
 
@@ -56,11 +56,12 @@ class NotificationService:
         except Exception as e:
             logger.error(f"Error checking user {user_id}: {str(e)}")
 
-    async def _send_notification(self, user_id: int, result: str) -> None:
+    async def _send_notification(self, user_id: int, result: tuple) -> None:
         """Отправка уведомления пользователю"""
         try:
-            message = f"🔔 Обнаружены изменения в ваших результатах:\n\n{result}"
-            await self.bot.send_message(user_id, message)
+            new, prev = result
+            message = f"🔔 Обнаружены изменения в ваших результатах:\n\n{new}\n\n***«{get_phrase()}»***"
+            await self.bot.send_message(user_id, message, parse_mode='Markdown')
             logger.info(f"Notification sent to user {user_id}")
         except Exception as e:
             logger.error(f"Failed to send notification to user {user_id}: {str(e)}")
