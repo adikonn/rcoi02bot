@@ -1,4 +1,7 @@
 from typing import Optional
+
+from sqlalchemy.util import await_only
+import asyncio
 from database.repository import user_repository
 from utils.parsers import get_content, print_result, extract_table_tb_result
 import logging
@@ -27,7 +30,7 @@ class ResultService:
             logger.error(f"Error getting result for user {user_id}: {str(e)}")
             return "Произошла ошибка при получении результатов. Попробуйте позже."
 
-    async def check_result_changes(self, user_id: int) -> Optional[tuple]:
+    async def check_result_changes(self, user_id: int, count: int = 0) -> Optional[tuple]:
         """Проверка изменений в результатах пользователя"""
         user = await user_repository.get_user_by_id(user_id)
         if not user:
@@ -43,7 +46,13 @@ class ResultService:
             )
 
             current_result = extract_table_tb_result(content)
-            if current_result == 'error server' or current_result == 'account does not exist. please check and try again':
+            if current_result == 'error server':
+                if count < 6:
+                    await asyncio.sleep(100)  # Короткая пауза при ошибке
+                    return await self.check_result_changes(user_id, count+1)
+                else:
+                    return None
+            if current_result == 'account does not exist. please check and try again':
                 return None
             if current_result != user.last_result:
                 prev = user.last_result
