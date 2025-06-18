@@ -43,7 +43,8 @@ class ResultService:
             )
 
             current_result = extract_table_tb_result(content)
-
+            if current_result == 'error server' or current_result == 'account does not exist. please check and try again':
+                return None
             if current_result != user.last_result:
                 prev = user.last_result
                 await user_repository.update_user_result(user_id, current_result)
