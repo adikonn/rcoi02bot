@@ -21,7 +21,7 @@ async def start_command(message: Message, state: FSMContext) -> None:
         "Введите вашу фамилию:"
     )
     await state.set_state(RegistrationStates.waiting_for_family)
-    await state.update_data(message_id=msg)
+    await state.update_data(message=msg)
 
 @router.message(Command("reregister"))
 async def reregister_command(message: Message, state: FSMContext) -> None:
@@ -29,7 +29,7 @@ async def reregister_command(message: Message, state: FSMContext) -> None:
     msg = await message.answer("Начинаем регистрацию заново.\nВведите вашу фамилию:")
 
     await state.set_state(RegistrationStates.waiting_for_family)
-    await state.update_data(message_id=msg)
+    await state.update_data(message=msg)
 
 
 
@@ -38,7 +38,8 @@ async def process_family(message: Message, state: FSMContext) -> None:
     """Обработка ввода фамилии"""
     await message.delete()
     family = message.text.strip()
-    msg = await state.get_value('message_id')
+    data = await state.get_data()
+    msg = data['message']
     if not family or not family.replace('-', '').replace(' ', '').isalpha():
         await msg.edit_text(
             "❌ Фамилия должна содержать только буквы, пробелы и дефисы.\n"
@@ -56,7 +57,8 @@ async def process_name(message: Message, state: FSMContext) -> None:
     await message.delete()
 
     """Обработка ввода имени"""
-    msg = await state.get_value('message_id')
+    data = await state.get_data()
+    msg = data['message']
 
     name = message.text.strip()
 
@@ -77,7 +79,8 @@ async def process_father(message: Message, state: FSMContext) -> None:
     await message.delete()
 
     """Обработка ввода отчества"""
-    msg = await state.get_value('message_id')
+    data = await state.get_data()
+    msg = data['message']
 
     father = message.text.strip()
 
@@ -98,7 +101,8 @@ async def process_number(message: Message, state: FSMContext) -> None:
     await message.delete()
 
     """Обработка ввода серии документа"""
-    msg = await state.get_value('message_id')
+    data = await state.get_data()
+    msg = data['message']
 
     number = message.text.strip()
 
@@ -119,8 +123,9 @@ async def process_class(message: Message, state: FSMContext) -> None:
     await message.delete()
 
     """Обработка ввода класса"""
-    msg = await state.get_value('message_id')
-
+    data = await state.get_data()
+    msg = data['message']
+    
     class_value = message.text.strip()
 
     if class_value not in ['9', '11']:
@@ -192,7 +197,8 @@ async def process_invalid_input(message: Message, state: FSMContext) -> None:
     await message.delete()
 
     """Обработка некорректного ввода во время регистрации"""
-    msg = await state.get_value('message_id')
+    data = await state.get_data()
+    msg = data['message']
 
     current_state = await state.get_state()
 
