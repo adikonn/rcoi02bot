@@ -16,7 +16,7 @@ Prerequisites
 1. Clone the repository 📥
 
 ```bash
-git clone https://github.com/adikonn/rcoi02bot/blob/master/README.md
+git clone https://github.com/adikonn/rcoi02bot.git
 cd rcoi02bot
 ```
 2. Install dependencies ⚙️
