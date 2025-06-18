@@ -78,19 +78,19 @@ CHECK_INTERVAL=600
 ```
 ## 🎯 Usage
 Basic Commands
-- /start - Initialize the bot 🚀
-- /register - Register for result checking 📝
-- /check - Check exam results 🔍
-- /help - Show available commands ❓
+- ```/start``` - Initialize the bot 🚀
+- ```/register``` - Register for result checking 📝
+- ```/check``` - Check exam results 🔍
+- ```/help``` - Show available commands ❓
 
 ### Registration Process
-1. Send /register command 📝
+1. Send ```/register``` command 📝
 2. Follow the step-by-step registration 👣
 3. Provide required information 📋
 4. Confirm registration ✅
 
 ### Checking Results
-1. Use /check command 🔍
+1. Use ```/check``` command 🔍
 2. Bot will fetch your latest results 📊
 3. Receive formatted result notification 📱
 
