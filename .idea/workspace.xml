@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a79fa22-efc4-4041-a285-a71305ec7bfe" name="Changes" comment="registration fixed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="3a79fa22-efc4-4041-a285-a71305ec7bfe" name="Changes" comment="registration fixed2">
       <change beforePath="$PROJECT_DIR$/handlers/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/registration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/results.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/results.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,13 +186,22 @@
       <option name="project" value="LOCAL" />
       <updated>1750228706273</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="registration fixed2">
+      <option name="closed" value="true" />
+      <created>1750229504911</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1750229504911</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add bot" />
     <MESSAGE value="registration fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="registration fixed" />
+    <MESSAGE value="registration fixed2" />
+    <option name="LAST_COMMIT_MESSAGE" value="registration fixed2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
