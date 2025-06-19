@@ -6,6 +6,7 @@ from typing import Dict, Any
 import logging
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from io import BytesIO
+from utils.smiles import smiles
 logger = logging.getLogger(__name__)
 
 
@@ -282,21 +283,15 @@ def create_inline_keyboard(data_list):
     # Создаем список кнопок
     buttons = []
     for item in data_list:
+        if smiles.get(item["title"]):
+            text = f"{smiles[item['title']]} {item['title']}"
+        else:
+            text = item["title"]
         button = InlineKeyboardButton(
-            text=item["title"],
+            text=text,
             callback_data=item["id"]
         )
         buttons.append([button])  # Каждая кнопка в отдельной строке
-
-    return InlineKeyboardMarkup(inline_keyboard=buttons)
-
-def create_back_keyboard():
-    buttons = []
-    button = InlineKeyboardButton(
-        text="<<",
-        callback_data="back"
-    )
-    buttons.append([button])  # Каждая кнопка в отдельной строке
 
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
