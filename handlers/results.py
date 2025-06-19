@@ -51,7 +51,7 @@ async def get_more(call: CallbackQuery):
     media_group = MediaGroupBuilder()
     if table_images:
         for img in table_images:
-            media_group.add(type='photo', media=BufferedInputFile(file=img, filename='image.png'))
+            media_group.add(type='photo', media=BufferedInputFile(file=img.getvalue(), filename='image.png'))
     if images:
         for i in range(len(images)):
             if i == 0:
