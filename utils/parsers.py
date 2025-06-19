@@ -159,12 +159,12 @@ def print_result(html_content: Dict[str, Any]) -> tuple:
         return 'error server'
 
     soup = BeautifulSoup(html_content['response'], 'html.parser')
-    table = soup.find('table', class_='tb_result')
-
+    table = soup.find_all('table', class_='tb_result')
+    print(html_content['response'])
     if not table:
         return 'account does not exist. please check and try again'
 
-
+    table = table[2]
     # Извлекаем заголовки таблицы
     headers = []
     header_row = table.find('tr')
@@ -175,6 +175,7 @@ def print_result(html_content: Dict[str, Any]) -> tuple:
 
     # Извлекаем и выводим данные из всех строк
     rows = table.find_all('tr')[1:] if headers else table.find_all('tr')
+
     data = []
     for row in rows:
         cells = []

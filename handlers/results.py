@@ -57,4 +57,6 @@ async def get_more(call: CallbackQuery):
                 media_group.add(type='photo', media=images[i], has_spoiler=True)
         await msg.delete()
         await call.message.answer_media_group(media=media_group.build())
-    
+    else:
+        await msg.delete()
+        await call.message.answer("❌ Произошла ошибка при получении бланков. Попробуйте позже")
