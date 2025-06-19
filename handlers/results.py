@@ -16,6 +16,7 @@ async def get_result_command(message: Message) -> None:
 
     try:
         result = await result_service.get_user_result(message.from_user.id)
+
         if result.startswith("Пользователь не найден"):
             await message.answer(result)
         elif result == "error server":
@@ -30,7 +31,9 @@ async def get_result_command(message: Message) -> None:
                 "команду /reregister для повторной регистрации."
             )
         else:
-            await message.answer(f"📊 **Ваши результаты:**\n\n{result}\n***«{get_phrase()}»***", parse_mode="Markdown")
+            result = result.split(" | ")
+            result = result[:5]
+            await message.answer(f"📊 **Ваши результаты:**\n\n{" | ".join(result)}\n***«{get_phrase()}»***", parse_mode="Markdown")
 
     except Exception as e:
         logger.error(f"Error in get_result_command: {str(e)}")
