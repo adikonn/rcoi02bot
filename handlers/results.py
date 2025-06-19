@@ -17,7 +17,8 @@ async def get_result_command(message: Message) -> None:
 
     try:
         result = await result_service.get_user_result(message.from_user.id)
-        if result.startswith("Пользователь не найден"):
+
+        if result == "Пользователь не найден. Пожалуйста, пройдите регистрацию командой /start":
             await message.answer(result)
         elif result == "error server":
             await message.answer(
