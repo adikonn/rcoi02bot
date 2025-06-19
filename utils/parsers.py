@@ -73,7 +73,7 @@ def get_content(family: str, name: str, father: str, number: str, class_: str = 
         return {'success': False, 'error': str(e)}
 
 
-def print_result(html_content: Dict[str, Any]) -> tuple[list[list[str]]] or str:
+def print_result(html_content: Dict[str, Any]) -> tuple:
     """
     Функция для извлечения и вывода таблицы с классом tb_result
     """

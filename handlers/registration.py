@@ -170,8 +170,6 @@ async def process_class(message: Message, state: FSMContext) -> None:
             )
             current_result = extract_table_tb_result(content)
             await user_repository.update_user_result(message.chat.id, current_result)
-
-
             await message.answer_photo(photo=table_image, caption=f"📊 **Ваши результаты:**\n\n{result}\n***«{get_phrase()}»***", parse_mode='Markdown')
             await message.answer(
                 "✅ Регистрация успешно завершена!\n\n"
