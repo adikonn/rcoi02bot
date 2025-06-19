@@ -318,7 +318,7 @@ def download_image_to_bytesio(url: str):
 
 def get_images(html_content: Dict[str, Any]):
     images = []
-    base_url = f'https://rcoi02.ru/gia{html_content['class']}_result/lk/'
+    base_url = f'https://rcoi02.ru/gia{html_content["class"]}_result/lk/'
     soup = BeautifulSoup(html_content['response'], "html.parser")
     for img in soup.find_all('img'):
         src = img.get('src')
