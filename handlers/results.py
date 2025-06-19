@@ -1,5 +1,6 @@
-from aiogram import Router
-from aiogram.types import Message, BufferedInputFile
+from aiogram import Router, F
+from aiogram.types import Message, BufferedInputFile, CallbackQuery
+from aiogram.utils.media_group import MediaGroupBuilder
 from aiogram.filters import Command
 from services.result_service import result_service
 from utils.phrases import get_phrase
@@ -42,3 +43,16 @@ async def get_result_command(message: Message) -> None:
             "❌ Произошла ошибка при получении результатов. "
             "Попробуйте позже или обратитесь к администратору."
         )
+@router.callback_query(F.data.startswith("id"))
+async def get_more(call: CallbackQuery):
+    id = call.data.replace("id", "")
+    images = result_service.get_images()
+    if images:
+        media_group = MediaGroupBuilder()
+        for i in range(len(images)):
+            if i == 0:
+                media_group.add(type='photo', media=BufferedInputFile(images[i], filename='image.png'), caption='Вот они, ваши бланки!')
+            else:
+                media_group.add(type='photo', media=BufferedInputFile(images[i], filename='image.png'))
+
+        await call.message.answer_media_group(media=media_group.build())

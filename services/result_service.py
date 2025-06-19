@@ -3,7 +3,7 @@ from typing import Optional
 from sqlalchemy.util import await_only
 import asyncio
 from database.repository import user_repository
-from utils.parsers import get_content, print_result, extract_table_tb_result, extract_page_info, create_inline_keyboard
+from utils.parsers import get_content, print_result, extract_table_tb_result, get_page, get_images, extract_page_info, create_inline_keyboard
 import logging
 
 logger = logging.getLogger(__name__)
@@ -66,6 +66,30 @@ class ResultService:
         except Exception as e:
             logger.error(f"Error checking result changes for user {user_id}: {str(e)}")
             return None
+    async def get_images(self, user_id: int, page_id: str, count=0):
+        user = await user_repository.get_user_by_id(user_id)
+        if not user:
+            return None
 
+        try:
+            content = get_page(
+                family=user.family,
+                name=user.name,
+                father=user.father,
+                number=user.number,
+                class_=user.class_,
+                page_id=page_id
+            )
+            if not content['success']:
+                return None
+            try:
+                images = get_images(html_content=content)
+                return images
+            except Exception as e:
+                logger.error(f"Error download photos for user {user_id}: {str(e)}")
+                return None
+        except Exception as e:
+            logger.error(f"Error download photos for user {user_id}: {str(e)}")
+            return None
 
 result_service = ResultService()
