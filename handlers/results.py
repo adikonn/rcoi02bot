@@ -32,7 +32,7 @@ async def get_result_command(message: Message) -> None:
                 "команду /reregister для повторной регистрации."
             )
         else:
-            headers, data, keyboard = result
+            headers, data, keyboard = result[0][0], result[0][1], result[1]
             table_image = BufferedInputFile(file=create_table_image(headers, data).getvalue(), filename='image.png')
             await message.answer_photo(photo=table_image, caption=f"📊 **Ваши результаты:**\n\n***«{get_phrase()}»***", parse_mode="Markdown", reply_markup=keyboard)
 
