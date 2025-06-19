@@ -32,8 +32,9 @@ async def get_result_command(message: Message) -> None:
                 "команду /reregister для повторной регистрации."
             )
         else:
-            table_image = BufferedInputFile(file=create_table_image(*result).getvalue(), filename='image.png')
-            await message.answer_photo(photo=table_image, caption=f"📊 **Ваши результаты:**\n\n***«{get_phrase()}»***", parse_mode="Markdown")
+            headers, data, keyboard = result
+            table_image = BufferedInputFile(file=create_table_image(headers, data).getvalue(), filename='image.png')
+            await message.answer_photo(photo=table_image, caption=f"📊 **Ваши результаты:**\n\n***«{get_phrase()}»***", parse_mode="Markdown", reply_markup=keyboard)
 
     except Exception as e:
         logger.error(f"Error in get_result_command: {str(e)}")

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Dict, Any
 import logging
-
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 logger = logging.getLogger(__name__)
 
 
@@ -165,3 +165,50 @@ def extract_table_tb_result(html_content: Dict[str, Any]) -> str:
 
             result += f"*{s[2]}* - {s[4]} {word}\n"
     return result
+def extract_page_info(html_content: Dict[str, Any]) -> list[Dict[str, str]]:
+    """
+    Извлекает информацию о страницах (название и ID) - ИСПРАВЛЕННАЯ ВЕРСИЯ
+    """
+
+    pages_info = []
+    soup = BeautifulSoup(html_content['response'], 'html.parser')
+    links = soup.find_all('a', href=True)
+
+    for link in links:
+        href = link['href']
+        if 'page.php?id=' in href:
+            try:
+                # ИСПРАВЛЕНИЕ: правильное извлечение ID
+                page_id = href.split('id=')[1].split('&')[0]
+                page_title = link.get_text(strip=True)
+
+                pages_info.append({
+                    'id': page_id,
+                    'title': page_title,
+                })
+            except IndexError:
+                continue
+
+    return pages_info
+
+
+def create_inline_keyboard(data_list):
+    """
+    Создает InlineKeyboardMarkup из списка словарей
+
+    Args:
+        data_list: список словарей вида [{"id": "435234", "title": "Физика"}, ...]
+
+    Returns:
+        InlineKeyboardMarkup
+    """
+    # Создаем список кнопок
+    buttons = []
+    for item in data_list:
+        button = InlineKeyboardButton(
+            text=item["title"],
+            callback_data=item["id"]
+        )
+        buttons.append([button])  # Каждая кнопка в отдельной строке
+
+    return InlineKeyboardMarkup(inline_keyboard=buttons)

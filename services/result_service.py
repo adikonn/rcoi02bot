@@ -3,14 +3,14 @@ from typing import Optional
 from sqlalchemy.util import await_only
 import asyncio
 from database.repository import user_repository
-from utils.parsers import get_content, print_result, extract_table_tb_result
+from utils.parsers import get_content, print_result, extract_table_tb_result, extract_page_info, create_inline_keyboard
 import logging
 
 logger = logging.getLogger(__name__)
 
 
 class ResultService:
-    async def get_user_result(self, user_id: int) -> str:
+    async def get_user_result(self, user_id: int):
         """Получение результатов пользователя"""
         user = await user_repository.get_user_by_id(user_id)
         if not user:
@@ -27,7 +27,8 @@ class ResultService:
             result = print_result(content)
             if 'error' in result or 'account' in result:
                 return result
-            return result
+            keyboard = create_inline_keyboard(extract_page_info(content))
+            return result, keyboard
         except Exception as e:
             logger.error(f"Error getting result for user {user_id}: {str(e)}")
             return "Произошла ошибка при получении результатов. Попробуйте позже."
