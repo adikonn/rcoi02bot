@@ -52,8 +52,8 @@ async def get_more(call: CallbackQuery):
         media_group = MediaGroupBuilder()
         for i in range(len(images)):
             if i == 0:
-                media_group.add(type='photo', media=images[i], caption=f"***{get_phrase()}***")
+                media_group.add(type='photo', media=images[i], caption=f"***{get_phrase()}***", parse_mode='Markdown', has_spoiler=True)
             else:
-                media_group.add(type='photo', media=images[i])
+                media_group.add(type='photo', media=images[i], has_spoiler=True)
         await msg.delete()
-        await call.message.answer_media_group(media=media_group.build(), protect_content=True)
+        await call.message.answer_media_group(media=media_group.build())
