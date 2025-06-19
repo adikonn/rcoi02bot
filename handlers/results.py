@@ -79,6 +79,7 @@ async def get_more(call: CallbackQuery):
                                      parse_mode="Markdown")
                 else:
                     media_group.add(type='photo', media=media_list[i])
+            await msg.delete()
             await call.message.answer_media_group(media=media_group.build())
     else:
         await msg.edit_text("❌ Произошла ошибка. Попробуйте позже")
