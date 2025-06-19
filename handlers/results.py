@@ -48,19 +48,37 @@ async def get_more(call: CallbackQuery):
     msg = await call.message.reply("⏳ Получаю ваши бланки, пожалуйста подождите...")
     page_id = call.data.replace("id", "")
     images, table_images = await result_service.get_images(call.message.chat.id, page_id)
-    media_group = MediaGroupBuilder()
+    media_list = []
     if table_images:
         for img in table_images:
-            media_group.add(type='photo', media=BufferedInputFile(file=img.getvalue(), filename='image.png'))
+            media_list.append(BufferedInputFile(file=img.getvalue(), filename='image.png'))
     if images:
         for i in range(len(images)):
-            if i == 0:
-                media_group.add(type='photo', media=images[i], caption=f"***{get_phrase()}***", parse_mode='Markdown', has_spoiler=True)
-            else:
-                media_group.add(type='photo', media=images[i], has_spoiler=True)
-    build = media_group.build()
-    if len(build):
-        await msg.delete()
-        await call.message.answer_media_group(media=media_group.build())
+            media_list.append(images[i])
+    if media_list:
+        if len(media_list) > 10:
+            media_group1 = MediaGroupBuilder()
+            media_group2 = MediaGroupBuilder()
+            for i in range(len(media_list)):
+                if i < 10:
+                        media_group1.add(type='photo', media=media_list[i])
+                else:
+                    if i == 10:
+                        media_group2.add(type='photo', media=media_list[i], caption=f"***{get_phrase()}***", parse_mode="Markdown")
+                    else:
+                        media_group2.add(type='photo', media=media_list[i])
+
+            await msg.delete()
+            await call.message.answer_media_group(media=media_group1.build())
+            await call.message.answer_media_group(media=media_group2.build())
+        else:
+            media_group = MediaGroupBuilder()
+            for i in range(len(media_list)):
+                if i == 1:
+                    media_group.add(type='photo', media=media_list[i], caption=f"***{get_phrase()}***",
+                                     parse_mode="Markdown")
+                else:
+                    media_group.add(type='photo', media=media_list[i])
+            await call.message.answer_media_group(media=media_group.build())
     else:
         await msg.edit_text("❌ Произошла ошибка. Попробуйте позже")

@@ -97,7 +97,12 @@ def create_table_image_blanks(headers, data, narrow_width=60, wide_width=300, me
             # Берем только количество элементов, соответствующее количеству заголовков
             processed_row = row[:len(headers)]
             processed_data.append(processed_row)
-    processed_data.append([data[-1][0], '', '', data[-1][-2], data[-1][-1]])
+    if len(headers) == 5:
+        processed_data.append([data[-1][0], '', '', data[-1][-2], data[-1][-1]])
+    elif len(headers) == 4:
+        processed_data.append([data[-1][0], '', data[-1][-2], data[-1][-1]])
+    else:
+        processed_data.append(data[-1])
     # Цвета из CSS
     header_bg_color = "#5ab97f"
     cell_border_color = "#e4e4e4"
