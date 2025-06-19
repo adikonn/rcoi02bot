@@ -45,14 +45,15 @@ async def get_result_command(message: Message) -> None:
         )
 @router.callback_query(F.data.startswith("id"))
 async def get_more(call: CallbackQuery):
-    await call.message.reply("⏳ Получаю ваши бланки, пожалуйста подождите...")
+    msg = await call.message.reply("⏳ Получаю ваши бланки, пожалуйста подождите...")
     page_id = call.data.replace("id", "")
     images = await result_service.get_images(call.message.chat.id, page_id)
     if images:
         media_group = MediaGroupBuilder()
         for i in range(len(images)):
             if i == 0:
-                media_group.add(type='photo', media=images[i], caption='Вот они, твои бланки!')
+                media_group.add(type='photo', media=images[i], caption=f"***{get_phrase()}***")
             else:
                 media_group.add(type='photo', media=images[i])
-        await call.message.answer_media_group(media=media_group.build())
+        await msg.delete()
+        await call.message.answer_media_group(media=media_group.build(), protect_content=True)
