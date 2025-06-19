@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a79fa22-efc4-4041-a285-a71305ec7bfe" name="Changes" comment="fix hints">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/registration.py" afterDir="false" />
+    <list default="true" id="3a79fa22-efc4-4041-a285-a71305ec7bfe" name="Changes" comment="fix edit msg">
+      <change beforePath="$PROJECT_DIR$/utils/images.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/images.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +65,7 @@
       <recent name="$PROJECT_DIR$/config" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.test2">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rcoi02bot" />
       <option name="ENV_FILES" value="" />
@@ -179,8 +178,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.test2" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.phrases" />
         <item itemvalue="Python.parsers" />
@@ -259,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750342929574</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fix edit msg">
+      <option name="closed" value="true" />
+      <created>1750343093717</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1750343093717</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -271,7 +278,8 @@
     <MESSAGE value="added error handling" />
     <MESSAGE value="added images! vasche pushka" />
     <MESSAGE value="fix hints" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix hints" />
+    <MESSAGE value="fix edit msg" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix edit msg" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
