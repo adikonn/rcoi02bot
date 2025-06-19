@@ -73,7 +73,7 @@ def get_content(family: str, name: str, father: str, number: str, class_: str = 
         return {'success': False, 'error': str(e)}
 
 
-def print_result(html_content: Dict[str, Any]) -> str:
+def print_result(html_content: Dict[str, Any]) -> tuple[list[list[str]]] or str:
     """
     Функция для извлечения и вывода таблицы с классом tb_result
     """
@@ -86,7 +86,6 @@ def print_result(html_content: Dict[str, Any]) -> str:
     if not table:
         return 'account does not exist. please check and try again'
 
-    res = ''
 
     # Извлекаем заголовки таблицы
     headers = []
@@ -98,7 +97,7 @@ def print_result(html_content: Dict[str, Any]) -> str:
 
     # Извлекаем и выводим данные из всех строк
     rows = table.find_all('tr')[1:] if headers else table.find_all('tr')
-
+    data = []
     for row in rows:
         cells = []
         for td in row.find_all(['td', 'th']):
@@ -106,9 +105,9 @@ def print_result(html_content: Dict[str, Any]) -> str:
             cells.append(cell_data)
 
         if cells:
-            res += " | ".join(cells) + '\n\n'
+            data.append(cells)
 
-    return res
+    return headers, data
 
 
 def extract_table_tb_result(html_content: Dict[str, Any]) -> str:

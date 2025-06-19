@@ -1,10 +1,11 @@
 from aiogram import Router, F
-from aiogram.types import Message
+from aiogram.types import Message, BufferedInputFile
 from aiogram.filters import Command, StateFilter
 from aiogram.fsm.context import FSMContext
 from states.registration import RegistrationStates
 from database.repository import user_repository
 from utils.phrases import get_phrase
+from utils.images import create_table_image
 import re
 import logging
 from utils.parsers import get_content, print_result, extract_table_tb_result
@@ -125,7 +126,7 @@ async def process_class(message: Message, state: FSMContext) -> None:
     """Обработка ввода класса"""
     data = await state.get_data()
     msg = data['message']
-    
+    await msg.delete()
     class_value = message.text.strip()
 
     if class_value not in ['9', '11']:
@@ -157,7 +158,7 @@ async def process_class(message: Message, state: FSMContext) -> None:
                 "при регистрации данных."
             )
         else:
-
+            table_image = BufferedInputFile(file=create_table_image(*result).getvalue(), filename='image.png')
             # Сохраняем пользователя в базу данных
             await user_repository.create_user(
                 user_id=message.from_user.id,
@@ -169,7 +170,9 @@ async def process_class(message: Message, state: FSMContext) -> None:
             )
             current_result = extract_table_tb_result(content)
             await user_repository.update_user_result(message.chat.id, current_result)
-            await msg.edit_text(f"📊 **Ваши результаты:**\n\n{result}\n***«{get_phrase()}»***", parse_mode='Markdown')
+
+
+            await message.answer_photo(photo=table_image, caption=f"📊 **Ваши результаты:**\n\n{result}\n***«{get_phrase()}»***", parse_mode='Markdown')
             await message.answer(
                 "✅ Регистрация успешно завершена!\n\n"
                 "Теперь вы можете:\n"
