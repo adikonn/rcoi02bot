@@ -3,13 +3,8 @@ Simple telegram bot for exam result checking 📊✅
 
 ## ✨ Features:
 
-- 🔍 Exam Result Checking - Quick and easy result lookup
-- 👤 User Registration - Simple registration process
-- 📱 Telegram Integration - Native Telegram bot interface
+- 🔍 Exam Result Checking - Quick and easy result looks
 - 🔔 Notifications - Automated result notifications
-- 📊 Result Parsing - Intelligent result data processing
-- 🛡️ Error Handling - Robust error management
-- 📝 Logging - Comprehensive activity logging
 
 ## 🚀 Installation
 Prerequisites
@@ -21,7 +16,7 @@ Prerequisites
 1. Clone the repository 📥
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/adikonn/rcoi02bot.git
 cd rcoi02bot
 ```
 2. Install dependencies ⚙️
@@ -45,19 +40,10 @@ python main.py
 Edit your .env file with the following variables:
 
 ```text
-# Bot Configuration
-BOT_TOKEN=your_telegram_bot_token_here
-BOT_USERNAME=your_bot_username
-
-# Database Configuration
-DATABASE_URL=your_database_url
-
-# API Configuration
-RESULTS_API_URL=your_results_api_endpoint
-API_KEY=your_api_key
-
-# Logging
+BOT_TOKEN=your_bot_token_here
+DATABASE_URL=sqlite+aiosqlite:///bot.db
 LOG_LEVEL=INFO
+CHECK_INTERVAL=600
 ```
 ## 📁 Project Structure
 ```text
@@ -92,19 +78,19 @@ LOG_LEVEL=INFO
 ```
 ## 🎯 Usage
 Basic Commands
-- /start - Initialize the bot 🚀
-- /register - Register for result checking 📝
-- /check - Check exam results 🔍
-- /help - Show available commands ❓
+- ```/start``` - Initialize the bot 🚀
+- ```/register``` - Register for result checking 📝
+- ```/check``` - Check exam results 🔍
+- ```/help``` - Show available commands ❓
 
 ### Registration Process
-1. Send /register command 📝
+1. Send ```/register``` command 📝
 2. Follow the step-by-step registration 👣
 3. Provide required information 📋
 4. Confirm registration ✅
 
 ### Checking Results
-1. Use /check command 🔍
+1. Use ```/check``` command 🔍
 2. Bot will fetch your latest results 📊
 3. Receive formatted result notification 📱
 
@@ -135,4 +121,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 4. Ensure all dependencies are installed 📦
 5. Create an issue on GitHub 🐛
 
-Made with ❤️ for easy exam result checking! 🎓✨
