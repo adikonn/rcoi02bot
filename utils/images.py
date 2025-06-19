@@ -1,13 +1,13 @@
 import matplotlib.font_manager as fm
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
-def create_table_image(data, headers, cell_width=120, cell_height=40):
+def create_table_image(headers, data, cell_width=120, cell_height=40):
     """
     Создает изображение таблицы на основе CSS стилей tb_result
 
     Args:
-        data: список списков с данными таблицы
         headers: список заголовков
+        data: список списков с данными таблицы
         cell_width: ширина ячейки
         cell_height: высота ячейки
     """
