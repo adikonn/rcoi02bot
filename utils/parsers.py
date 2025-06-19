@@ -165,7 +165,7 @@ def extract_table_tb_result(html_content: Dict[str, Any]) -> str:
 
             result += f"*{s[2]}* - {s[4]} {word}\n"
     return result
-def extract_page_info(html_content: Dict[str, Any]) -> list[Dict[str, str]]:
+def extract_page_info(html_content: Dict[str, Any]):
     """
     Извлекает информацию о страницах (название и ID) - ИСПРАВЛЕННАЯ ВЕРСИЯ
     """
