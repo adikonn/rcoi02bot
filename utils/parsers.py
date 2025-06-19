@@ -290,7 +290,15 @@ def create_inline_keyboard(data_list):
 
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
+def create_back_keyboard():
+    buttons = []
+    button = InlineKeyboardButton(
+        text="<<",
+        callback_data="back"
+    )
+    buttons.append([button])  # Каждая кнопка в отдельной строке
 
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
 
 def get_images(html_content: Dict[str, Any]):
     images = []
