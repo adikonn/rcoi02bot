@@ -25,7 +25,8 @@ class ResultService:
                 class_=user.class_
             )
             result = print_result(content)
-            return result
+            if 'error' in result or 'account' in result:
+                return result
         except Exception as e:
             logger.error(f"Error getting result for user {user_id}: {str(e)}")
             return "Произошла ошибка при получении результатов. Попробуйте позже."

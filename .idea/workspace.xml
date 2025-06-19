@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a79fa22-efc4-4041-a285-a71305ec7bfe" name="Changes" comment="fix edit msg">
-      <change beforePath="$PROJECT_DIR$/utils/images.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/images.py" afterDir="false" />
+    <list default="true" id="3a79fa22-efc4-4041-a285-a71305ec7bfe" name="Changes" comment="mini fix (beautify)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/results.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/results.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/result_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/result_service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +268,23 @@
       <option name="project" value="LOCAL" />
       <updated>1750343093717</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix poryadok">
+      <option name="closed" value="true" />
+      <created>1750343446825</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1750343446825</updated>
+    </task>
+    <task id="LOCAL-00011" summary="mini fix (beautify)">
+      <option name="closed" value="true" />
+      <created>1750343576150</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1750343576150</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -279,7 +297,9 @@
     <MESSAGE value="added images! vasche pushka" />
     <MESSAGE value="fix hints" />
     <MESSAGE value="fix edit msg" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix edit msg" />
+    <MESSAGE value="fix poryadok" />
+    <MESSAGE value="mini fix (beautify)" />
+    <option name="LAST_COMMIT_MESSAGE" value="mini fix (beautify)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

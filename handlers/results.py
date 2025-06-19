@@ -1,8 +1,9 @@
 from aiogram import Router
-from aiogram.types import Message
+from aiogram.types import Message, BufferedInputFile
 from aiogram.filters import Command
 from services.result_service import result_service
 from utils.phrases import get_phrase
+from utils.images import create_table_image
 import logging
 
 logger = logging.getLogger(__name__)
@@ -30,7 +31,8 @@ async def get_result_command(message: Message) -> None:
                 "команду /reregister для повторной регистрации."
             )
         else:
-            await message.answer(f"📊 **Ваши результаты:**\n\n{result}\n***«{get_phrase()}»***", parse_mode="Markdown")
+            table_image = BufferedInputFile(file=create_table_image(*result).getvalue(), filename='image.png')
+            await message.answer_photo(photo=table_image, caption=f"📊 **Ваши результаты:**\n\n***«{get_phrase()}»***", parse_mode="Markdown")
 
     except Exception as e:
         logger.error(f"Error in get_result_command: {str(e)}")
