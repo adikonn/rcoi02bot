@@ -45,49 +45,14 @@ async def get_result_command(message: Message) -> None:
         )
 @router.callback_query(F.data.startswith("id"))
 async def get_more(call: CallbackQuery):
-    await call.message.edit_text("⏳ Получаю ваши бланки, пожалуйста подождите...")
+    await call.message.reply("⏳ Получаю ваши бланки, пожалуйста подождите...")
     page_id = call.data.replace("id", "")
     images = await result_service.get_images(call.message.chat.id, page_id)
     if images:
         media_group = MediaGroupBuilder()
         for i in range(len(images)):
             if i == 0:
-                media_group.add(type='photo', media=images[i], caption='Вот они, ваши бланки!')
+                media_group.add(type='photo', media=images[i], caption='Вот они, твои бланки!')
             else:
                 media_group.add(type='photo', media=images[i])
-        await call.message.delete()
         await call.message.answer_media_group(media=media_group.build())
-@router.callback_query(F.data.startswith("back"))
-async def back(call: CallbackQuery):
-    """Обработчик команды /get_result"""
-
-    try:
-        result = await result_service.get_user_result(call.message.from_user.id)
-
-        if result == "Пользователь не найден. Пожалуйста, пройдите регистрацию командой /start":
-            await call.message.edit_text(result)
-        elif result == "error server":
-            await call.message.edit_text(
-                "❌ Ошибка сервера. Сайт временно недоступен. "
-                "Попробуйте позже."
-            )
-        elif result == "account does not exist. please check and try again":
-            await call.message.edit_text(
-                "❌ Аккаунт не найден. Проверьте правильность введенных "
-                "при регистрации данных. При необходимости используйте "
-                "команду /reregister для повторной регистрации."
-            )
-        else:
-            headers, data, keyboard = result[0][0], result[0][1], result[1]
-            table_image = BufferedInputFile(file=create_table_image(headers, data).getvalue(), filename='image.png')
-            media_group = MediaGroupBuilder()
-            media_group.add(type='photo', media=table_image)
-            await call.message.edit_media(media=media_group.build(), caption=f"📊 **Ваши результаты:**\n\n***«{get_phrase()}»***",
-                                       parse_mode="Markdown", reply_markup=keyboard)
-
-    except Exception as e:
-        logger.error(f"Error in get_result_command: {str(e)}")
-        await call.message.edit_text(
-            "❌ Произошла ошибка при получении результатов. "
-            "Попробуйте позже или обратитесь к администратору."
-        )
