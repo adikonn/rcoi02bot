@@ -46,7 +46,7 @@ async def get_result_command(message: Message) -> None:
 @router.callback_query(F.data.startswith("id"))
 async def get_more(call: CallbackQuery):
     id = call.data.replace("id", "")
-    images = result_service.get_images()
+    images = result_service.get_images(call.message.chat.id, id)
     if images:
         media_group = MediaGroupBuilder()
         for i in range(len(images)):
