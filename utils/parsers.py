@@ -291,30 +291,6 @@ def create_inline_keyboard(data_list):
     return InlineKeyboardMarkup(inline_keyboard=buttons)
 
 
-def download_image_to_bytesio(url: str):
-    """
-    Скачивает изображение по URL и возвращает объект BytesIO с содержимым изображения.
-
-    Args:
-        url: URL изображения
-
-    Returns:
-        BytesIO объект с содержимым изображения или сообщение об ошибке
-    """
-    try:
-        response = requests.get(url, timeout=30)
-        response.raise_for_status()
-
-        # Создаем BytesIO объект
-        image_bytes = BytesIO(response.content)
-        image_bytes.seek(0)  # Устанавливаем указатель в начало
-
-        return image_bytes
-
-    except requests.exceptions.RequestException as e:
-        return f'Ошибка при скачивании: {str(e)}'
-    except Exception as e:
-        return f'Неожиданная ошибка: {str(e)}'
 
 def get_images(html_content: Dict[str, Any]):
     images = []
@@ -324,5 +300,5 @@ def get_images(html_content: Dict[str, Any]):
         src = img.get('src')
         if src:
             url = urljoin(base_url, src)
-            images.append(download_image_to_bytesio(url))
+            images.append(url)
     return images

@@ -45,8 +45,8 @@ async def get_result_command(message: Message) -> None:
         )
 @router.callback_query(F.data.startswith("id"))
 async def get_more(call: CallbackQuery):
-    id = call.data.replace("id", "")
-    images = ['https://rcoi02.ru/gia11_result/lk/project/EGE_phis_soc_02062025_img/batches/00002000/00002573/EGE_AB0004.png', 'https://rcoi02.ru/gia11_result/lk/project/EGE_phis_soc_02062025_img/batches/00002000/00002573/EGE_AB0005.png']
+    page_id = call.data.replace("id", "")
+    images = await result_service.get_images(call.message.chat.id, page_id)
     if images:
         media_group = MediaGroupBuilder()
         for i in range(len(images)):
