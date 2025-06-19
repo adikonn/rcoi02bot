@@ -126,7 +126,6 @@ async def process_class(message: Message, state: FSMContext) -> None:
     """Обработка ввода класса"""
     data = await state.get_data()
     msg = data['message']
-    await msg.delete()
     class_value = message.text.strip()
 
     if class_value not in ['9', '11']:
@@ -158,6 +157,7 @@ async def process_class(message: Message, state: FSMContext) -> None:
                 "при регистрации данных."
             )
         else:
+            await msg.delete()
             table_image = BufferedInputFile(file=create_table_image(*result).getvalue(), filename='image.png')
             # Сохраняем пользователя в базу данных
             await user_repository.create_user(
