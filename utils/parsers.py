@@ -159,12 +159,10 @@ def print_result(html_content: Dict[str, Any]) -> tuple:
         return 'error server'
 
     soup = BeautifulSoup(html_content['response'], 'html.parser')
-    table = soup.find_all('table', class_='tb_result')
-    print(html_content['response'])
+    table = soup.find('table', class_='tb_result')
     if not table:
         return 'account does not exist. please check and try again'
 
-    table = table[2]
     # Извлекаем заголовки таблицы
     headers = []
     header_row = table.find('tr')
@@ -187,8 +185,41 @@ def print_result(html_content: Dict[str, Any]) -> tuple:
             data.append(cells)
 
     return headers, data
+def extract_more_tables(html_content: Dict[str, Any]):
+    """
+        Функция для извлечения и вывода таблицы с классом tb_result
+        """
+    if not html_content['success']:
+        return None
 
+    soup = BeautifulSoup(html_content['response'], 'html.parser')
+    tables = soup.find_all('table', class_='tb_result')
+    if not tables:
+        return None
+    result = []
+    for table in tables:
+        # Извлекаем заголовки таблицы
+        headers = []
+        header_row = table.find('tr')
+        if header_row:
+            for th in header_row.find_all(['th', 'td']):
+                headers.append(th.text.strip())
 
+        # Извлекаем и выводим данные из всех строк
+        rows = table.find_all('tr')[1:] if headers else table.find_all('tr')
+
+        data = []
+        for row in rows:
+            cells = []
+            for td in row.find_all(['td', 'th']):
+                cell_data = td.text.strip()
+                cells.append(cell_data)
+
+            if cells:
+                data.append(cells)
+        if len(data) > 2:
+            result.append((headers, data))
+    return result
 def extract_table_tb_result(html_content: Dict[str, Any]) -> str:
     """
     Функция для извлечения и вывода таблицы с классом tb_result

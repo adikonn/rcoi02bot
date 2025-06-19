@@ -47,16 +47,20 @@ async def get_result_command(message: Message) -> None:
 async def get_more(call: CallbackQuery):
     msg = await call.message.reply("⏳ Получаю ваши бланки, пожалуйста подождите...")
     page_id = call.data.replace("id", "")
-    images = await result_service.get_images(call.message.chat.id, page_id)
+    images, table_images = await result_service.get_images(call.message.chat.id, page_id)
+    media_group = MediaGroupBuilder()
+    if table_images:
+        for img in table_images:
+            media_group.add(type='photo', media=BufferedInputFile(file=img, filename='image.png'))
     if images:
-        media_group = MediaGroupBuilder()
         for i in range(len(images)):
             if i == 0:
                 media_group.add(type='photo', media=images[i], caption=f"***{get_phrase()}***", parse_mode='Markdown', has_spoiler=True)
             else:
                 media_group.add(type='photo', media=images[i], has_spoiler=True)
+    build = media_group.build()
+    if len(build):
         await msg.delete()
         await call.message.answer_media_group(media=media_group.build())
     else:
-        await msg.delete()
-        await call.message.answer("❌ Произошла ошибка при получении бланков. Попробуйте позже")
+        await msg.edit_text("❌ Произошла ошибка. Попробуйте позже")

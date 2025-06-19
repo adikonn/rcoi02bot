@@ -3,7 +3,8 @@ from typing import Optional
 from sqlalchemy.util import await_only
 import asyncio
 from database.repository import user_repository
-from utils.parsers import get_content, print_result, extract_table_tb_result, get_page, get_images, extract_page_info, create_inline_keyboard
+from utils.parsers import get_content, extract_more_tables, print_result, extract_table_tb_result, get_page, get_images, extract_page_info, create_inline_keyboard
+from utils.images import create_table_image_blanks
 import logging
 
 logger = logging.getLogger(__name__)
@@ -84,7 +85,11 @@ class ResultService:
                 return None
             try:
                 images = get_images(html_content=content)
-                return images
+                tables = extract_more_tables(html_content=content)
+                image_tables = []
+                if tables:
+                    image_tables = [create_table_image_blanks(*table) for table in tables]
+                return images, image_tables
             except Exception as e:
                 logger.error(f"Error download photos for user {user_id}: {str(e)}")
                 return None
