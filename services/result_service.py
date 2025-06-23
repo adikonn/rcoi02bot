@@ -70,7 +70,7 @@ class ResultService:
     async def get_images(self, user_id: int, page_id: str, count=0):
         user = await user_repository.get_user_by_id(user_id)
         if not user:
-            return None
+            return None, None
 
         try:
             content = get_page(
@@ -82,7 +82,7 @@ class ResultService:
                 page_id=page_id
             )
             if not content['success']:
-                return None
+                return None, None
             try:
                 images = get_images(html_content=content)
                 tables = extract_more_tables(html_content=content)
@@ -92,9 +92,9 @@ class ResultService:
                 return images, image_tables
             except Exception as e:
                 logger.error(f"Error download photos for user {user_id}: {str(e)}")
-                return None
+                return None, None
         except Exception as e:
             logger.error(f"Error download photos for user {user_id}: {str(e)}")
-            return None
+            return None, None
 
 result_service = ResultService()
